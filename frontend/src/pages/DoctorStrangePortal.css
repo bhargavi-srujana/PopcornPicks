@@ -1,0 +1,74 @@
+
+.destination-portal {
+  position: relative;
+  flex: none;
+  isolation: isolate;
+  overflow: visible;
+}
+
+/* Destination image inside the portal */
+.portal-destination-image {
+  position: absolute;
+  inset: 10px;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  border-radius: 50%;
+  object-fit: cover;
+
+  opacity: 0;
+  transform: scale(0.8);
+  transition:
+    opacity 700ms ease,
+    transform 900ms ease;
+
+  z-index: 0;
+  pointer-events: none;
+}
+
+.destination-portal.is-open .portal-destination-image {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Canvas sits above the image, drawing the animated rim */
+.portal-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Keep the control below the portal */
+.portal-trigger {
+  position: absolute;
+  left: 50%;
+  bottom: -38px;
+  transform: translateX(-50%);
+  z-index: 2;
+
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 173, 65, 0.75);
+  border-radius: 4px;
+  background: rgba(30, 16, 7, 0.94);
+  color: #ffe4a3;
+
+  font-size: 10px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.portal-trigger:hover {
+  background: #42230d;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portal-destination-image {
+    transition: none;
+  }
+}

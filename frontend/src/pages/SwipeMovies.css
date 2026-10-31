@@ -1,0 +1,323 @@
+.swipe-page {
+  background-color: #11182c;
+  background-position: center;
+  background-size: cover;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.swipe-page__veil {
+  position: absolute;
+  inset: 0;
+  
+  background:
+    linear-gradient(180deg, rgba(4, 15, 32, 0.62), rgba(11, 14, 37, 0.25) 45%, rgba(10, 10, 28, 0.78)),
+    radial-gradient(circle at 50% 40%, rgba(255, 141, 54, 0.12), transparent 32%);
+}
+
+.swipe-heading h1 {
+  margin: 0.25rem 0 0.15rem;
+  color: #ffe8bc;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 600;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.7);
+}
+
+.swipe-heading > p:not(.swipe-kicker) {
+  color: rgba(255, 236, 198, 0.82);
+  font-size: 1.1rem;
+}
+
+.swipe-kicker {
+  color: rgba(255, 198, 105, 0.8);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+}
+
+.swipe-navigation__back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid rgba(255, 210, 115, 0.7);
+  border-radius: 0.5rem;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.5rem 0.8rem;
+  color: #ffe8bc;
+  font-size: 0.8rem;
+  transition: background 200ms ease;
+}
+
+.swipe-navigation__back:hover {
+  background: rgba(169, 95, 30, 0.8);
+}
+
+.swipe-navigation__back--recommendations {
+  position: static;
+  align-self: flex-start;
+  margin-top: 1.5rem;
+}
+
+.swipe-heading__star {
+  display: block;
+  margin-top: 0.55rem;
+  color: #ffd981;
+  font-size: 1.2rem;
+}
+
+.swipe-stage {
+  position: relative;
+  display: flex;
+  width: min(100%, 56rem);
+  min-height: 23rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.75rem;
+}
+
+.movie-stack {
+  position: relative;
+  width: min(58vw, 15.5rem);
+  aspect-ratio: 0.67;
+  perspective: 900px;
+}
+
+.movie-card {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border: 2px solid rgba(255, 174, 76, 0.85);
+  border-radius: 1rem;
+  background: #251b28 center / cover no-repeat;
+  box-shadow: 0 0 12px rgba(255, 141, 38, 0.9), 0 0 42px rgba(255, 141, 38, 0.35), 0 22px 40px rgba(0, 0, 0, 0.5);
+}
+
+.movie-card--back {
+  transform: translateX(3.2rem) rotate(10deg) scale(0.9);
+  opacity: 0.62;
+}
+
+.movie-card--middle {
+  transform: translateX(-3.2rem) rotate(-10deg) scale(0.92);
+  opacity: 0.82;
+}
+
+.movie-card--active {
+  z-index: 2;
+}
+
+.movie-card--active img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.movie-card__empty {
+  display: grid;
+  height: 100%;
+  place-items: center;
+  color: #ffe8bc;
+}
+
+.movie-card__heart {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.8rem;
+  color: #fff3dc;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 2rem;
+  line-height: 1;
+  text-shadow: 0 1px 5px #000;
+}
+
+.swipe-hint {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  color: #ffe8bc;
+  line-height: 1.25;
+  transform: translateY(-50%);
+}
+
+.swipe-hint span {
+  color: #dca2ff;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 2rem;
+}
+
+.swipe-hint strong,
+.swipe-hint small {
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+.swipe-hint small {
+  color: rgba(255, 232, 188, 0.7);
+  font-size: 0.75rem;
+}
+
+.swipe-hint--left {
+  right: calc(50% + 10rem);
+  align-items: flex-end;
+  text-align: right;
+}
+
+.swipe-hint--right {
+  left: calc(50% + 10rem);
+  align-items: flex-start;
+  text-align: left;
+}
+
+.movie-copy {
+  max-width: 24rem;
+  margin-top: 0.4rem;
+}
+
+.movie-copy h2 {
+  color: #ffe5a7;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.movie-copy p {
+  color: rgba(255, 235, 196, 0.86);
+  font-size: 0.85rem;
+}
+
+.movie-copy p span {
+  margin: 0 0.35rem;
+  color: #ffc866;
+}
+
+.movie-copy__plot {
+  display: -webkit-box;
+  margin-top: 0.35rem;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.swipe-actions {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(2rem, 7vw, 5rem);
+  margin-top: 0.65rem;
+}
+
+.swipe-action {
+  display: flex;
+  width: 3.9rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  color: #ffe7b6;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.swipe-action span {
+  display: grid;
+  width: 3.2rem;
+  height: 3.2rem;
+  place-items: center;
+  border: 1px solid #dca2ff;
+  border-radius: 50%;
+  color: #e7b5ff;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 2.2rem;
+  line-height: 1;
+  transition: transform 200ms ease, background 200ms ease;
+}
+
+.swipe-action:hover span {
+  transform: translateY(-3px) scale(1.05);
+  background: rgba(224, 159, 255, 0.15);
+}
+
+.swipe-action--like span {
+  width: 4.3rem;
+  height: 4.3rem;
+  border-color: #ffd063;
+  color: #ffd063;
+  font-size: 2rem;
+  box-shadow: 0 0 18px rgba(255, 196, 75, 0.45);
+}
+
+.swipe-action small {
+  font-size: 0.85rem;
+}
+
+.movie-details {
+  position: fixed;
+  z-index: 20;
+  top: 50%;
+  left: 50%;
+  width: min(90vw, 28rem);
+  padding: 2rem;
+  border: 1px solid rgba(255, 205, 107, 0.55);
+  border-radius: 1rem;
+  background: rgba(22, 16, 36, 0.96);
+  box-shadow: 0 20px 70px #000;
+  transform: translate(-50%, -50%);
+}
+
+.movie-details h2 {
+  color: #ffe5a7;
+  font-size: 1.7rem;
+}
+
+.movie-details p {
+  margin-top: 0.8rem;
+  color: rgba(255, 237, 202, 0.78);
+  line-height: 1.5;
+}
+
+.movie-details button:last-child,
+.swipe-empty button {
+  margin-top: 1.2rem;
+  border-radius: 0.5rem;
+  background: #a95f1e;
+  padding: 0.65rem 1rem;
+  color: #fff0cf;
+}
+
+.movie-details__close {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.75rem;
+  color: #ffe4af;
+  font-size: 1.5rem;
+}
+
+.swipe-empty {
+  margin-top: 8rem;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .swipe-stage {
+    min-height: 20rem;
+  }
+
+  .swipe-hint {
+    top: auto;
+    bottom: -0.5rem;
+    transform: none;
+  }
+
+  .swipe-hint--left {
+    right: 50%;
+    margin-right: 1rem;
+  }
+
+  .swipe-hint--right {
+    left: 50%;
+    margin-left: 1rem;
+  }
+
+  .swipe-hint span {
+    font-size: 1.4rem;
+  }
+}

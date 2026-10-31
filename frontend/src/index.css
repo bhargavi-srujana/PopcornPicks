@@ -1,0 +1,216 @@
+@import "tailwindcss";
+
+/* ==================== Page transition (landing → language) ==================== */
+:root {
+  --pp-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --pp-door-x: 53%;
+  --pp-door-y: 65%;
+}
+
+.pp-app {
+  min-height: 100vh;
+  /* dark base so mid-transition transparency never flashes white */
+  background: #24150f;
+}
+
+/* --- Phase 2: camera push toward the doorway --- */
+.pp-camera {
+  transform-origin: var(--pp-door-x) var(--pp-door-y);
+  transition: transform 1.45s var(--pp-ease);
+}
+
+.pp-camera.is-push {
+  transform: scale(1.14);
+}
+
+/* Surroundings gently darken; the doorway stays lit */
+.pp-dim {
+  position: absolute;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    circle at var(--pp-door-x) var(--pp-door-y),
+    rgba(16, 8, 3, 0) 0%,
+    rgba(16, 8, 3, 0.1) 32%,
+    rgba(16, 8, 3, 0.55) 68%,
+    rgba(12, 6, 3, 0.88) 100%
+  );
+  transition: opacity 1.35s var(--pp-ease);
+}
+
+.pp-camera.is-push .pp-dim {
+  opacity: 1;
+}
+
+/* --- Phase 1: warm light spilling through the opening doors --- */
+.pp-doorlight {
+  position: absolute;
+  left: var(--pp-door-x);
+  top: var(--pp-door-y);
+  width: 78vmin;
+  height: 78vmin;
+  min-width: 420px;
+  min-height: 420px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  background: radial-gradient(
+    circle,
+    rgba(255, 238, 197, 0.78) 0%,
+    rgba(255, 212, 133, 0.42) 26%,
+    rgba(255, 179, 84, 0.18) 50%,
+    rgba(255, 160, 60, 0) 72%
+  );
+  opacity: 0;
+  z-index: 50;
+  pointer-events: none;
+  transition:
+    opacity 4.2s ease-out,
+    transform 1.45s var(--pp-ease);
+}
+
+.doors-playing .pp-doorlight {
+  opacity: 0.7;
+}
+
+/* After doors-playing: glow expands with the push (keep this rule last) */
+.pp-camera.is-push .pp-doorlight {
+  transform: translate(-50%, -50%) scale(1.35);
+  opacity: 0.95;
+  transition:
+    opacity 1s ease-out,
+    transform 1.45s var(--pp-ease);
+}
+
+/* --- Phase 3: golden light fills the screen, then blends away --- */
+.pp-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  opacity: 0;
+  pointer-events: auto;
+  background: radial-gradient(
+    circle at var(--pp-door-x) var(--pp-door-y),
+    #fff3d6 0%,
+    #ffe4ab 22%,
+    #f8c877 45%,
+    #dd9f5c 70%,
+    #c07c4c 100%
+  );
+  transition: opacity 0.4s var(--pp-ease);
+}
+
+/* blocked clicks while idle-free phases, never after the transition */
+.pp-app[data-phase="home"] .pp-flash,
+.pp-app[data-phase="done"] .pp-flash {
+  pointer-events: none;
+}
+
+.pp-flash.is-on {
+  opacity: 1;
+}
+
+.pp-flash.is-off {
+  opacity: 0;
+  transition-duration: 0.75s;
+}
+
+/* --- Phase 4: selection layer settles in --- */
+.selection-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  overflow-y: auto;
+  overflow-x: hidden;
+  pointer-events: none;
+}
+
+.selection-layer.is-in {
+  animation: pp-layer-in 0.7s ease-out both;
+}
+
+.selection-layer.is-interactive {
+  pointer-events: auto;
+}
+
+@keyframes pp-layer-in {
+  from {
+    opacity: 0;
+    transform: none;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Background settles first, then the language labels */
+.selection-layer.is-in .portal-trigger {
+  animation: pp-label-in 0.55s 0.5s var(--pp-ease) both;
+}
+
+@keyframes pp-label-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* ==================== Reduced motion ==================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* simpler fade transition instead of the camera push */
+  .pp-camera,
+  .pp-camera.is-push {
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .pp-doorlight,
+  .pp-camera.is-push .pp-doorlight {
+    transform: translate(-50%, -50%) !important;
+    transition: opacity 0.8s linear !important;
+  }
+
+  .pp-dim {
+    transition: opacity 0.8s linear !important;
+  }
+
+  .pp-flash {
+    transition: opacity 0.5s linear !important;
+  }
+
+  .pp-flash.is-off {
+    transition-duration: 0.6s !important;
+  }
+
+  .selection-layer.is-in {
+    animation: pp-layer-fade 0.7s linear both !important;
+  }
+
+  .selection-layer.is-in .portal-trigger {
+    animation: none !important;
+    opacity: 1;
+  }
+
+  @keyframes pp-layer-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
